@@ -1,6 +1,7 @@
 <script src="http://192.168.1.180:3001/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://192.168.1.180:3001');
+  socket.emit('join',"CatalogProduct");
   socket.on('data', function (data) {
     console.log(data);
 	output.innerHTML = JSON.stringify(data);
