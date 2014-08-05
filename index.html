@@ -1,10 +1,38 @@
-<script src="http://192.168.1.180:3001/socket.io/socket.io.js"></script>
+<script src="http://192.168.1.180:3000/socket.io/socket.io.js"></script>
 <script>
-  var socket = io.connect('http://192.168.1.180:3001');
-  socket.emit('join',"CatalogProduct");
+  var socket = io.connect('http://192.168.1.180:3000');
+  socket.emit('join',"main");
   socket.on('data', function (data) {
     console.log(data);
 	output.innerHTML = JSON.stringify(data);
   });
 </script>
 <div id="output">Waiting...</div>
+<pre>
+
+	Example Scripts
+	
+	// Sub
+	(function(address){
+	  $.getScript(address+"/socket.io/socket.io.js",function(){
+	    var socket = io.connect(address);
+	    socket.emit('join',"main");
+	    socket.on('data', function (data) {
+	      console.log(data);
+	    });
+	  });
+	})('http://192.168.1.180:3000');
+
+	// Pub
+	$.ajax({
+	  type: "POST",
+	  url: 'http://192.168.1.180:3000/',
+	  data: { refresh:new Date() },
+	  dataType: "json",
+	  headers: {
+	    "X-Connection-Password":"sylvane",
+	    "X-Broadcast-Channel":"main",
+	  }
+	});
+
+</pre>
