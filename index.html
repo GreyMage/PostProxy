@@ -1,13 +1,19 @@
-<script src="http://192.168.1.180:3000/socket.io/socket.io.js"></script>
+<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+
+<div id="output"></div>
 <script>
-  var socket = io.connect('http://192.168.1.180:3000');
-  socket.emit('join',"main");
-  socket.on('data', function (data) {
-    console.log(data);
-	output.innerHTML = JSON.stringify(data);
-  });
+  var socket = io.connect('http://127.0.0.1:3000');
+  output.innerHTML = "Connecting";
+  socket.on('connect', function(){
+  	socket.removeAllListeners("data");
+	output.innerHTML = "Connected! Waiting.";
+  	socket.emit('join',"main");
+    socket.on('data', function (data) {
+      console.log(data);
+  	  output.innerHTML = JSON.stringify(data);
+    });
+  })
 </script>
-<div id="output">Waiting...</div>
 <pre>
 
 	Example Scripts
