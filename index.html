@@ -1,8 +1,8 @@
-<script src="http://127.0.0.1:3000/socket.io/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 
 <div id="output"></div>
 <script>
-  var socket = io.connect('http://127.0.0.1:3000');
+  var socket = io.connect(window.location.origin);
   output.innerHTML = "Connecting";
   socket.on('connect', function(){
   	socket.removeAllListeners("data");
@@ -18,7 +18,14 @@
 
 	Example Scripts
 	
-	// Sub
+	// Sub - Simple
+	$.getScript('<span class="here"></span>/listen/main',function(){
+		ppListen(function (data) {
+			console.log(data);
+		});
+	});
+
+	// Sub - Advanced
 	(function(address){
 	  $.getScript(address+"/socket.io/socket.io.js",function(){
 	    var socket = io.connect(address);
@@ -27,13 +34,13 @@
 	      console.log(data);
 	    });
 	  });
-	})('http://192.168.1.180:3000');
+	})('<span class="here"></span>');
 
 	// Pub
 	$.ajax({
 	  type: "POST",
-	  url: 'http://192.168.1.180:3000/',
-	  data: { refresh:new Date() },
+	  url: '<span class="here"></span>',
+	  data: { refresh:new Date().getTime() },
 	  dataType: "json",
 	  headers: {
 	    "X-Connection-Password":"sylvane",
@@ -42,3 +49,12 @@
 	});
 
 </pre>
+
+<script>
+var spots = document.getElementsByClassName('here');
+for(var i=0;i<spots.length;i++){
+	spots[i].innerHTML = window.location.origin;
+}
+console.log(window.location.origin);
+
+</script>
